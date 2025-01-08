@@ -1,18 +1,44 @@
 import React, { useRef, useEffect, useState } from 'react'
 import './Weather.css'
 import search from '../assets/search.png'
-import cloudy from '../assets/cloudy.png'
-import foggy from '../assets/foggy.png'
+import blackCloud from '../assets/blackCloud.png'
+import cloud from '../assets/cloud.png'
+import cloudyMoon from '../assets/cloudyMoon.png'
+import cloudySun from '../assets/cloudySun.png'
 import humidity from '../assets/humidity.png'
+import mist from '../assets/mist.png'
+import moon from '../assets/moon.png'
 import pressure from '../assets/pressure.png'
-import rain from '../assets/rain.png'
-import sunny from '../assets/sunny.png'
+import rainyCloud from '../assets/rainyCloud.png'
+import rainyMoon from '../assets/rainyMoon.png'
+import rainySun from '../assets/rainySun.png'
 import snow from '../assets/snow.png'
+import sun from '../assets/sun.png'
 import thunder from '../assets/thunder.png'
 
 const Weather = () => {
     const inputRef = useRef()
     const [weather, setWeather] = useState(false);
+    const allIcons = {
+        '01d': sun,
+        '02d': cloudySun,
+        '03d': cloud,
+        '04d': blackCloud,
+        '09d': rainyCloud,
+        '10d': rainySun,
+        '11d': thunder,
+        '13d': snow,
+        '50d': mist,
+        '01n': moon,
+        '02n': cloudyMoon,
+        '03n': cloud,
+        '04n': blackCloud,
+        '09n': rainyCloud,
+        '10n': rainyMoon,
+        '11n': thunder,
+        '13n': snow,
+        '50n': mist
+    }
 
     const Search = async (city) => {
         if (city === '') {
@@ -27,6 +53,7 @@ const Weather = () => {
                 return alert('City Not Found')
             }
             console.log(data)
+            const icons = allIcons[data.weather[0].icon] || sun;
             setWeather({
                 city: data.name,
                 // country: data.sys.country,
@@ -38,7 +65,7 @@ const Weather = () => {
                 wind: data.wind.speed,
                 main: data.weather[0].main,
                 description: data.weather[0].description,
-                icon: data.weather[0].icon,
+                icon: icons,
                 feels: data.main.feels_like,
                 speed: data.wind.speed,
             })
@@ -60,7 +87,7 @@ const Weather = () => {
                 } />
             </div>
             {weather ? <>
-                <img className='weather-icon' src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} alt="" />
+                <img className='weather-icon' src={weather.icon} alt="" />
                 <p className='temperature'>{weather.temp}°C</p>
                 <p className='description'>{weather.description}</p>
                 <p className='location'>{weather.city}</p>

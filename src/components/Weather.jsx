@@ -15,6 +15,7 @@ import rainySun from '../assets/rainySun.png'
 import snow from '../assets/snow.png'
 import sun from '../assets/sun.png'
 import thunder from '../assets/thunder.png'
+import Swal from 'sweetalert2'
 
 const Weather = () => {
     const inputRef = useRef()
@@ -42,7 +43,7 @@ const Weather = () => {
 
     const Search = async (city) => {
         if (city === '') {
-            return alert('Please Enter City Name')
+            return Swal.fire("Please Enter City Name");
         }
         try {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}
@@ -50,18 +51,16 @@ const Weather = () => {
             const res = await fetch(url)
             const data = await res.json()
             if (data.cod === '404') {
-                return alert('City Not Found')
+                return Swal.fire("City Not Found");
             }
-            console.log(data)
+            // console.log(data)
             const icons = allIcons[data.weather[0].icon] || sun;
             setWeather({
                 city: data.name,
-                // country: data.sys.country,
                 temp: Math.floor(data.main.temp),
                 temp_max: Math.floor(data.main.temp_max),
                 temp_min: Math.floor(data.main.temp_min),
                 humidity: data.main.humidity,
-                // pressure: data.main.pressure,
                 wind: data.wind.speed,
                 main: data.weather[0].main,
                 description: data.weather[0].description,
@@ -71,7 +70,7 @@ const Weather = () => {
             })
         } catch (error) {
             setWeather(false);
-            console.log(error)
+            // console.log(error)
         }
     }
     useEffect(() => {
@@ -114,5 +113,4 @@ const Weather = () => {
     )
 }
 
-
-export default Weather
+export default Weather;

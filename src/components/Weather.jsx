@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './Weather.css'
 import search from '../assets/search.png'
 import blackCloud from '../assets/blackCloud.png'
@@ -94,14 +95,14 @@ const Weather = () => {
                     <div className="col">
                         <img src={humidity} alt="" />
                         <div>
-                            <p>{weather.humidity}%</p>
+                            <p className='para' >{weather.humidity}%</p>
                             <span>humidity</span>
                         </div>
                     </div>
                     <div className="col">
                         <img src={pressure} alt="" />
                         <div>
-                            <p>{weather.speed} KM/H</p>
+                            <p className='para'>{weather.speed} KM/H</p>
                             <span>Wind</span>
                         </div>
                     </div>
